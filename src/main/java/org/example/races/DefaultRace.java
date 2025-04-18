@@ -1,5 +1,8 @@
 package org.example.races;
 
+import org.dom4j.Document;
+import org.dom4j.tree.DefaultDocument;
+
 import java.io.IOException;
 import java.util.Date;
 
@@ -40,7 +43,7 @@ public class DefaultRace implements Race {
     }
 
     @Override
-    public void nfo() throws IOException {
-
+    public Document nfo() throws IOException {
+        return new DefaultDocument();
     }
 }

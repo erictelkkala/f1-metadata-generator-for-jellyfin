@@ -1,5 +1,7 @@
 package org.example.seasons;
 
+import org.dom4j.Document;
+import org.dom4j.tree.DefaultDocument;
 import org.example.races.Race;
 
 import java.time.Instant;
@@ -63,7 +65,8 @@ public final class DefaultSeason implements Season {
     }
 
     @Override
-    public void nfo() {
+    public Document nfo() {
         // TODO: Probably call for-each loop for all races' nfo() methods, then create NFO file if successful
+        return new DefaultDocument();
     }
 }
