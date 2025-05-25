@@ -7,6 +7,7 @@ import org.dom4j.Element;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public final class DefaultSession implements Session {
     private final SessionType sessionType;
@@ -72,5 +73,17 @@ public final class DefaultSession implements Session {
         artElement.addElement("poster").addText(this.posterPath);
 
         return document;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        DefaultSession that = (DefaultSession) o;
+        return season == that.season && episode == that.episode && year == that.year && sessionType == that.sessionType && Objects.equals(title, that.title) && Objects.equals(sortTitle, that.sortTitle) && Objects.equals(plot, that.plot) && Objects.equals(date, that.date) && Objects.equals(dateAdded, that.dateAdded) && Objects.equals(posterPath, that.posterPath) && Objects.equals(timeFormat, that.timeFormat);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sessionType, title, sortTitle, season, episode, plot, date, dateAdded, year, posterPath, timeFormat);
     }
 }

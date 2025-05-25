@@ -2,11 +2,13 @@ package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
 import erictelkkala.f1_metadata_generator_for_jellyfin.PrettyNfo;
 import exampleXML.ExampleXMLFile;
+import nl.jqno.equalsverifier.EqualsVerifier;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -50,5 +52,11 @@ class DefaultSessionTest {
 
         // Output matches a human-readable format
         Assertions.assertEquals(new ExampleXMLFile().document().asXML(), new PrettyNfo(returnedDocument).document().asXML());
+    }
+
+    @Test
+    @DisplayName("equalsVerifier")
+    void equalsVerifier() {
+        EqualsVerifier.forClass(DefaultSession.class).verify();
     }
 }
