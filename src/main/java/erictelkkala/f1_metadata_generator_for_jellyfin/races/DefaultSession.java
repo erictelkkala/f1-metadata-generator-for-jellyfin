@@ -50,7 +50,7 @@ public final class DefaultSession implements Session {
 
     @Override
     public SessionType sessionType() {
-        return null;
+        return this.sessionType;
     }
 
     @Override
