@@ -15,15 +15,15 @@ class DefaultSessionTest {
     void nfoIsCreated() throws IOException, ParseException {
         Document expectedDocument = DocumentHelper.createDocument();
         Element details = expectedDocument.addElement("episodedetails");
-        Element lockData = details.addElement("lockdata").addText("true");
-        Element title = details.addElement("title").addText("title");
-        Element sorttitle = details.addElement("sorttitle").addText("title3");
-        Element season = details.addElement("season").addText("2025");
-        Element episode = details.addElement("episode").addText("1");
-        Element plot = details.addElement("plot").addText("plot");
-        Element aired = details.addElement("aired").addText("2025-01-01");
-        Element dateadded = details.addElement("dateadded").addText("2025-01-01");
-        Element year = details.addElement("year").addText("2025");
+        details.addElement("lockdata").addText("true");
+        details.addElement("title").addText("title");
+        details.addElement("sorttitle").addText("title3");
+        details.addElement("season").addText("2025");
+        details.addElement("episode").addText("1");
+        details.addElement("plot").addText("plot");
+        details.addElement("aired").addText("2025-01-01");
+        details.addElement("dateadded").addText("2025-01-01");
+        details.addElement("year").addText("2025");
 
         Element artElement = details.addElement("art");
         artElement.addElement("poster").addText("poster");
