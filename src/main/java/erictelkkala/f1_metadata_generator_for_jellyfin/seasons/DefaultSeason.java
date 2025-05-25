@@ -1,8 +1,8 @@
-package org.example.seasons;
+package erictelkkala.f1_metadata_generator_for_jellyfin.seasons;
 
+import erictelkkala.f1_metadata_generator_for_jellyfin.races.Race;
 import org.dom4j.Document;
 import org.dom4j.tree.DefaultDocument;
-import org.example.races.Race;
 
 import java.time.Instant;
 import java.util.Date;

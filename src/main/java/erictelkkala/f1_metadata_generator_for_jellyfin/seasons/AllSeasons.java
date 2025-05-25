@@ -1,4 +1,4 @@
-package org.example.seasons;
+package erictelkkala.f1_metadata_generator_for_jellyfin.seasons;
 
 import java.io.IOException;
 import java.util.List;

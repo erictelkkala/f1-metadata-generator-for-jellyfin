@@ -1,4 +1,4 @@
-package org.example.altNames;
+package erictelkkala.f1_metadata_generator_for_jellyfin.altNames;
 
 import java.util.Map;
 

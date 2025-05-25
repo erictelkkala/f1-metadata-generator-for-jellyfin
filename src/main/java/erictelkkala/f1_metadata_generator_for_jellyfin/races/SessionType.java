@@ -1,4 +1,4 @@
-package org.example.races;
+package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
 public enum SessionType {
     RACE(7, 7),

@@ -1,4 +1,4 @@
-package org.example.races;
+package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
