@@ -1,6 +1,9 @@
 package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
+import erictelkkala.f1_metadata_generator_for_jellyfin.PrettyNfo;
+import exampleXML.ExampleXMLFile;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +15,7 @@ import java.text.SimpleDateFormat;
 
 class DefaultSessionTest {
     @Test
-    void nfoIsCreated() throws IOException, ParseException {
+    void nfoIsCreated() throws IOException, ParseException, DocumentException {
         Document expectedDocument = DocumentHelper.createDocument();
         Element details = expectedDocument.addElement("episodedetails");
         details.addElement("lockdata").addText("true");
@@ -45,6 +48,7 @@ class DefaultSessionTest {
 
         final Document returnedDocument = session.nfo();
 
-        Assertions.assertEquals(expectedDocument.asXML(), returnedDocument.asXML());
+        // Output matches a human-readable format
+        Assertions.assertEquals(new ExampleXMLFile().document().asXML(), new PrettyNfo(returnedDocument).document().asXML());
     }
 }

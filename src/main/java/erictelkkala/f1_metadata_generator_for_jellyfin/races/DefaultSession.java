@@ -58,15 +58,15 @@ public final class DefaultSession implements Session {
 
         Document document = DocumentHelper.createDocument();
         Element details = document.addElement("episodedetails");
-        Element lockData = details.addElement("lockdata").addText("true");
-        Element title = details.addElement("title").addText(this.title);
-        Element sorttitle = details.addElement("sorttitle").addText(this.sortTitle);
-        Element season = details.addElement("season").addText(String.valueOf(this.season));
-        Element episode = details.addElement("episode").addText(String.valueOf(this.episode));
-        Element plot = details.addElement("plot").addText(this.plot);
-        Element aired = details.addElement("aired").addText(dateFormat.format(this.date));
-        Element dateadded = details.addElement("dateadded").addText(dateFormat.format(this.dateAdded));
-        Element year = details.addElement("year").addText(String.valueOf(this.year));
+        details.addElement("lockdata").addText("true");
+        details.addElement("title").addText(this.title);
+        details.addElement("sorttitle").addText(this.sortTitle);
+        details.addElement("season").addText(String.valueOf(this.season));
+        details.addElement("episode").addText(String.valueOf(this.episode));
+        details.addElement("plot").addText(this.plot);
+        details.addElement("aired").addText(dateFormat.format(this.date));
+        details.addElement("dateadded").addText(dateFormat.format(this.dateAdded));
+        details.addElement("year").addText(String.valueOf(this.year));
 
         Element artElement = details.addElement("art");
         artElement.addElement("poster").addText(this.posterPath);
