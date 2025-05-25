@@ -1,4 +1,4 @@
-package org.example.races;
+package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
 import org.dom4j.Document;
 import org.dom4j.tree.DefaultDocument;
@@ -6,7 +6,7 @@ import org.dom4j.tree.DefaultDocument;
 import java.io.IOException;
 import java.util.Date;
 
-public class DefaultRace implements Race {
+public class DefaultWeekend implements Race {
     private final int raceNumber;
     private final Date raceDate;
     private final String raceName;
@@ -18,7 +18,7 @@ public class DefaultRace implements Race {
     private final Date qualiDate;
     private final Date sprintQualiDate;
 
-    public DefaultRace(
+    public DefaultWeekend(
             final int raceNumber,
             final Date raceDate,
             final String raceName,
