@@ -1,7 +1,6 @@
 package erictelkkala.f1_metadata_generator_for_jellyfin.races;
 
 import erictelkkala.f1_metadata_generator_for_jellyfin.PrettyNfo;
-import exampleXML.ExampleXMLFile;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -10,14 +9,18 @@ import org.dom4j.Element;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 class DefaultSessionTest {
     @Test
-    void nfoIsCreated() throws IOException, ParseException, DocumentException {
+    void nfoIsCreated(@TempDir Path tempDir) throws IOException, ParseException, DocumentException {
+        final File posterFile = tempDir.resolve("poster.png").toFile();
         Document expectedDocument = DocumentHelper.createDocument();
         Element details = expectedDocument.addElement("episodedetails");
         details.addElement("lockdata").addText("true");
@@ -31,7 +34,7 @@ class DefaultSessionTest {
         details.addElement("year").addText("2025");
 
         Element artElement = details.addElement("art");
-        artElement.addElement("poster").addText("poster");
+        artElement.addElement("poster").addText(posterFile.getCanonicalPath());
 
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         final DefaultSession session = new DefaultSession(
@@ -44,14 +47,14 @@ class DefaultSessionTest {
                 dateFormat.parse("2025-01-01"),
                 dateFormat.parse("2025-01-01"),
                 2025,
-                "poster",
+                posterFile,
                 "yyyy-MM-dd"
         );
 
         final Document returnedDocument = session.nfo();
 
         // Output matches a human-readable format
-        Assertions.assertEquals(new ExampleXMLFile().document().asXML(), new PrettyNfo(returnedDocument).document().asXML());
+        Assertions.assertEquals(new PrettyNfo(expectedDocument).document().asXML(), new PrettyNfo(returnedDocument).document().asXML());
     }
 
     @Test

@@ -13,15 +13,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public final class DefaultWikipediaSource implements WikipediaSource {
+public record DefaultWikipediaSource(int season, String raceTitle) implements WikipediaSource {
     private final static Logger LOGGER = LogManager.getLogger(DefaultWikipediaSource.class.getName());
-    private final int season;
-    private final String raceTitle;
-
-    public DefaultWikipediaSource(int season, String raceTitle) {
-        this.season = season;
-        this.raceTitle = raceTitle;
-    }
 
     @Override
     public String seasonDescription() throws SeasonNotFoundException {

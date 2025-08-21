@@ -4,6 +4,7 @@ import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +20,7 @@ public final class DefaultSession implements Session {
     private final Date date;
     private final Date dateAdded;
     private final int year;
-    private final String posterPath;
+    private final File posterPath;
     private final String timeFormat;
 
     public DefaultSession(
@@ -32,7 +33,7 @@ public final class DefaultSession implements Session {
             final Date date,
             final Date dateAdded,
             final int year,
-            final String posterPath,
+            final File posterPath,
             final String timeFormat
     ) {
         this.sessionType = sessionType;
@@ -70,7 +71,7 @@ public final class DefaultSession implements Session {
         details.addElement("year").addText(String.valueOf(this.year));
 
         Element artElement = details.addElement("art");
-        artElement.addElement("poster").addText(this.posterPath);
+        artElement.addElement("poster").addText(this.posterPath.getCanonicalPath());
 
         return document;
     }
