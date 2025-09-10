@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<season>
+  <plot>season plot</plot>
+  <lockdata>true</lockdata>
+  <dateadded>2025-04-16</dateadded>
+  <title>Season 2025</title>
+  <year>2025</year>
+  <premiered>2025-03-16</premiered>
+  <releasedate />
+  <enddate>2025-12-07</enddate>
+  <seasonnumber>2025</seasonnumber>
+  <art>
+    <poster>folder.jpg</poster>
+  </art>
+</season>
