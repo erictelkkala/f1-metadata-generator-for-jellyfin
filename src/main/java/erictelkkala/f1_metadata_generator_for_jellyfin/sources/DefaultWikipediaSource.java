@@ -33,6 +33,7 @@ public record DefaultWikipediaSource(int season, String raceTitle) implements Wi
                                     "&explaintext=1"
                             )
                     )
+                    .header("User-Agent", "F1MetadataGenerator/1.0 (https://github.com/erictelkkala/f1-metadata-generator-for-jellyfin) Java-http-client")
                     .GET().build();
 
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
