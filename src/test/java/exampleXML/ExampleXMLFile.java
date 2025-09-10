@@ -14,7 +14,7 @@ public final class ExampleXMLFile {
     }
 
     public ExampleXMLFile() {
-        this(Path.of("src/test/resources/exampleXMLFile.nfo"));
+        this(Path.of("src/test/resources/exampleEpisodeFile.nfo"));
     }
 
     public Document document() throws DocumentException {
