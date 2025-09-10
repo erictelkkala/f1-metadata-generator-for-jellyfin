@@ -2,12 +2,7 @@ package erictelkkala.f1_metadata_generator_for_jellyfin.altNames;
 
 import java.util.Map;
 
-public final class ValidatedAlternativeNames implements AlternativeNames {
-    private final AlternativeNames alternativeNames;
-
-    public ValidatedAlternativeNames(AlternativeNames alternativeNames) {
-        this.alternativeNames = alternativeNames;
-    }
+public record ValidatedAlternativeNames(AlternativeNames alternativeNames) implements AlternativeNames {
 
     @Override
     public String alternativeName(String name) {
