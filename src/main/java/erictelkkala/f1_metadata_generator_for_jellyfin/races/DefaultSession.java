@@ -7,6 +7,7 @@ import org.dom4j.Element;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,8 +18,8 @@ public final class DefaultSession implements Session {
     private final int season;
     private final int episode;
     private final String plot;
-    private final Date date;
-    private final Date dateAdded;
+    private final Instant date;
+    private final Instant dateAdded;
     private final int year;
     private final File posterPath;
     private final String timeFormat;
@@ -30,8 +31,8 @@ public final class DefaultSession implements Session {
             final int season,
             final int episode,
             final String plot,
-            final Date date,
-            final Date dateAdded,
+            final Instant date,
+            final Instant dateAdded,
             final int year,
             final File posterPath,
             final String timeFormat
@@ -66,8 +67,8 @@ public final class DefaultSession implements Session {
         details.addElement("season").addText(String.valueOf(this.season));
         details.addElement("episode").addText(String.valueOf(this.episode));
         details.addElement("plot").addText(this.plot);
-        details.addElement("aired").addText(dateFormat.format(this.date));
-        details.addElement("dateadded").addText(dateFormat.format(this.dateAdded));
+        details.addElement("aired").addText(dateFormat.format(Date.from(this.date)));
+        details.addElement("dateadded").addText(dateFormat.format(Date.from(this.dateAdded)));
         details.addElement("year").addText(String.valueOf(this.year));
 
         Element artElement = details.addElement("art");

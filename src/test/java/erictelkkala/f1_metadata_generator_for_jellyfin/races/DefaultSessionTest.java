@@ -44,8 +44,8 @@ class DefaultSessionTest {
                 2025,
                 1,
                 "plot",
-                dateFormat.parse("2025-01-01"),
-                dateFormat.parse("2025-01-01"),
+                dateFormat.parse("2025-01-01").toInstant(),
+                dateFormat.parse("2025-01-01").toInstant(),
                 2025,
                 posterFile,
                 "yyyy-MM-dd"
