@@ -1,6 +1,8 @@
 package erictelkkala.f1_metadata_generator_for_jellyfin.sources;
 
 import erictelkkala.f1_metadata_generator_for_jellyfin.races.DefaultWeekend;
+import erictelkkala.f1_metadata_generator_for_jellyfin.sources.jolpi.JsonSession;
+import erictelkkala.f1_metadata_generator_for_jellyfin.sources.jolpi.JsonSessionImpl;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -14,15 +16,13 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
 public final class Jolpi {
     private final static Logger LOGGER = LogManager.getLogger(Jolpi.class);
     private final static String RACES_URI = "/races/";
-    public final URI uri;
+    private final URI uri;
 
     public Jolpi(URI uri) {
         this.uri = uri;
@@ -62,47 +62,30 @@ public final class Jolpi {
         return weekends;
     }
 
-    private DefaultWeekend parseWeekend(final JsonObject jsonObject) {
-        final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
-
-        final int raceNumber = jsonObject.getInt("round");
+    public DefaultWeekend parseWeekend(final JsonObject jsonObject) {
+        final int raceNumber = Integer.parseInt(jsonObject.getString("round"));
         final String raceName = jsonObject.getString("raceName");
-        final int circuitID = jsonObject.getJsonObject("Circuit").getInt("circuitId");
-        final String raceDate = jsonObject.getString("date");
-        final String raceTime = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
-        final String qualiDate = this.parseDate(jsonObject, "Qualifying");
-        final String qualiTime = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
-        final String sprintDate = parseDate(jsonObject, "Qualifying");
-        final String sprintTime = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
-        final String sprintQualiDate = this.parseDate(jsonObject, "SprintQualifying");
-        final String sprintQualiTime = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
+        final String circuitID = jsonObject.getJsonObject("Circuit").getString("circuitId");
+        final JsonSession fp1Session = new JsonSessionImpl(jsonObject.getJsonObject("FirstPractice"));
+        final JsonSession fp2Session = new JsonSessionImpl(jsonObject.getJsonObject("SecondPractice"));
+        final JsonSession fp3Session = new JsonSessionImpl(jsonObject.getJsonObject("ThirdPractice"));
+        final JsonSession qualiSession = new JsonSessionImpl(jsonObject.getJsonObject("Qualifying"));
+        final JsonSession raceSession = new JsonSessionImpl(jsonObject);
+        final JsonSession sprintQualiSession = new JsonSessionImpl(jsonObject.getJsonObject("SprintQualifying"));
+        final JsonSession sprintSession = new JsonSessionImpl(jsonObject.getJsonObject("Sprint"));
 
-        final String FP1Date = this.parseDate(jsonObject, "FirstPractice");
-        final String FP1Time = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
-        final String FP2Date = this.parseDate(jsonObject, "ThirdPractice");
-        final String FP2Time = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
-        final String FP3Date = this.parseDate(jsonObject, "ThirdPractice");
-        final String FP3Time = jsonObject.containsKey("time") ? jsonObject.getString("time") : "00:00:00Z";
+
         return new DefaultWeekend(
                 raceNumber,
-                LocalDateTime.parse(raceDate + "T" + raceTime, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
+                new DateTime(raceSession.date(), raceSession.time()).asInstant(),
                 raceName,
                 circuitID,
-                sprintDate.equals("1970-01-01") ? null : LocalDateTime.parse(sprintDate + "T" + sprintTime, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
-                FP1Date.equals("1970-01-01") ? null : LocalDateTime.parse(FP1Date + "T" + FP1Time, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
-                FP2Date.equals("1970-01-01") ? null : LocalDateTime.parse(FP2Date + "T" + FP2Time, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
-                FP3Date.equals("1970-01-01") ? null : LocalDateTime.parse(FP3Date + "T" + FP3Time, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
-                qualiDate.equals("1970-01-01") ? null : LocalDateTime.parse(qualiDate + "T" + qualiTime, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC),
-                sprintQualiDate.equals("1970-01-01") ? null : LocalDateTime.parse(sprintQualiDate + "T" + sprintQualiTime, dateTimeFormatter).toInstant(java.time.ZoneOffset.UTC)
+                new DateTime(sprintSession.date(), sprintSession.time()).asInstant(),
+                new DateTime(fp1Session.date(), fp1Session.time()).asInstant(),
+                new DateTime(fp2Session.date(), fp2Session.time()).asInstant(),
+                new DateTime(fp3Session.date(), fp3Session.time()).asInstant(),
+                new DateTime(qualiSession.date(), qualiSession.time()).asInstant(),
+                new DateTime(sprintQualiSession.date(), sprintQualiSession.time()).asInstant()
         );
     }
-
-    private String parseDate(final JsonObject jsonObject, final String key) {
-        if (jsonObject.containsKey(key)) {
-            return jsonObject.getJsonObject(key).getString("date");
-        } else {
-            return "1970-01-01";
-        }
-    }
-
 }
